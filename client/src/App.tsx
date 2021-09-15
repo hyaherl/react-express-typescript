@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from './util/axios';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [data, setData] = useState("");
+	const [id, setId] = useState("");
+	const [password, setPassword] = useState("");
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	const getData = () => {
+		axios.get('/hello?hello=world').then((res) => {
+			setData(res.data.message);
+		})
+	};
+
+	const signUp = () => {
+		axios.post('/user', {
+			id: id,
+			password: password
+		}).then((res) => {
+			console.log(res.data);
+		})
+	};
+
+	return (
+		<div className="App">
+			<h1>{data}</h1>
+			<input type="text" placeholder="id" onChange={e => setId(e.target.value)}></input>
+			<input type="text" placeholder="password" onChange={e => setPassword(e.target.value)}></input>
+			<button onClick={signUp}>signUp</button>
+		</div>
+	);
 }
 
 export default App;

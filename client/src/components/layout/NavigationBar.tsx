@@ -33,7 +33,7 @@ function NavigationBar() {
           <Typography variant="h6" className={classes.title} onClick={() => linkPage('/')}>
             Hello World
           </Typography>
-          <Button color="inherit" onClick={() => linkPage('/user')}>
+          <Button color="inherit" onClick={() => linkPage('/logIn')}>
             Login
           </Button>
         </Toolbar>

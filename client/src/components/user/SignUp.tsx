@@ -13,25 +13,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type LoginProps = {
+type SignUpProps = {
   formChange: (e: any) => void;
   signUp: () => void;
 };
 
-function Login({ formChange, signUp }: LoginProps) {
+function SignUp({ formChange, signUp }: SignUpProps) {
   const classes = useStyles();
   return (
     <div>
       <h1>Sign Up</h1>
       <form className={classes.root} noValidate autoComplete="off">
         <div className={classes.div}>
-          <TextField id="id" name="id" label="id" onChange={formChange} />
+          <TextField id="email" name="email" label="email" onChange={formChange} />
           <TextField id="password" name="password" label="password" onChange={formChange} />
-          <Button onClick={signUp}>Sign In</Button>
+          <Button onClick={signUp}>Sign Up</Button>
         </div>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default SignUp;

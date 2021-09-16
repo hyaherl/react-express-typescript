@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import axios from '../../util/axios';
-import Login from '../../components/user/Login';
 import SignUp from '../../components/user/SignUp';
 
-function User() {
+function SignUpContainer() {
   const [user, setUser] = useState({
-    id: '',
+    email: '',
     password: '',
   });
-  const { id, password } = user;
+  const { email, password } = user;
 
   const formChange = (e: any) => {
     const { name, value } = e.target;
@@ -18,10 +17,10 @@ function User() {
     });
   };
 
-  const signIn = () => {
+  const signUp = () => {
     axios
-      .post('/user', {
-        id: id,
+      .post('/user/signUp', {
+        email: email,
         password: password,
       })
       .then(res => {
@@ -31,10 +30,9 @@ function User() {
 
   return (
     <div>
-      <Login formChange={formChange} signIn={signIn} />
-      {/* <SignUp /> */}
+      <SignUp formChange={formChange} signUp={signUp} />
     </div>
   );
 }
 
-export default User;
+export default SignUpContainer;

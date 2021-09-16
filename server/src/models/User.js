@@ -1,16 +1,16 @@
 class User {
-    constructor(id, password) {
-        this.id = id;
-        this.password = password;
-    }
+  constructor(email, password) {
+    this.email = email;
+    this.password = password;
+  }
 
-    getId() {
-        return this.id;
-    }
+  getEmail() {
+    return this.email;
+  }
 
-    getPassword() {
-        return this.password;
-    }
+  getPassword() {
+    return this.password;
+  }
 }
 
 module.exports = User;

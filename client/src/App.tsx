@@ -1,40 +1,38 @@
+import { Container } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
+import NavigationBar from './components/layout/NavigationBar';
+import Home from './container/Home';
+import User from './container/user/User';
 import axios from './util/axios';
 
 function App() {
-	const [data, setData] = useState("");
-	const [id, setId] = useState("");
-	const [password, setPassword] = useState("");
+  const [data, setData] = useState('');
 
-	useEffect(() => {
-		getData();
-	}, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-	const getData = () => {
-		axios.get('/hello?hello=world').then((res) => {
-			setData(res.data.message);
-		})
-	};
+  const getData = () => {
+    axios.get('/hello?hello=World').then(res => {
+      setData(res.data.message);
+    });
+  };
 
-	const signUp = () => {
-		axios.post('/user', {
-			id: id,
-			password: password
-		}).then((res) => {
-			console.log(res.data);
-		})
-	};
-
-	return (
-		<div className="App">
-			<h1>{data}</h1>
-			<input type="text" placeholder="id" onChange={e => setId(e.target.value)}></input>
-			<input type="text" placeholder="password" onChange={e => setPassword(e.target.value)}></input>
-			<button onClick={signUp}>signUp</button>
-		</div>
-	);
+  return (
+    <div className="App">
+      <Router>
+        <NavigationBar />
+        <Container>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/user" exact component={User} />
+          </Switch>
+        </Container>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

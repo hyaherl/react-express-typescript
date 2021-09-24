@@ -9,4 +9,7 @@ export class User extends Common {
 
     @Column()
     password: string;
+
+    @Column()
+    nickname: string;
 }

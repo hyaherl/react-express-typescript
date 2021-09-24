@@ -4,42 +4,53 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+    root: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
-function NavigationBar() {
-  const classes = useStyles();
-  const history = useHistory();
+type NavigationBarProps = {
+    user: any;
+    logout: () => void;
+};
 
-  const linkPage = (path: string) => {
-    history.push(path);
-  };
+function NavigationBar({ user, logout }: NavigationBarProps) {
+    const classes = useStyles();
+    const history = useHistory();
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title} onClick={() => linkPage('/')}>
-            Hello World
-          </Typography>
-          <Button color="inherit" onClick={() => linkPage('/logIn')}>
-            Login
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+    const linkPage = (path: string) => {
+        history.push(path);
+    };
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title} onClick={() => linkPage('/')}>
+                        Hello World
+                    </Typography>
+                    {user ? (
+                        <Button color="inherit" onClick={() => logout()}>
+                            Logout
+                        </Button>
+                    ) : (
+                        <Button color="inherit" onClick={() => linkPage('/logIn')}>
+                            Login
+                        </Button>
+                    )}
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
 
 export default NavigationBar;

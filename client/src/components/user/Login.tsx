@@ -27,7 +27,7 @@ function Login({ formChange, signIn, signUp }: LogInProps) {
             <form className={classes.root} noValidate autoComplete="off">
                 <div className={classes.div}>
                     <TextField id="email" name="email" label="email" onChange={formChange} />
-                    <TextField id="password" name="password" label="password" onChange={formChange} />
+                    <TextField id="password" name="password" label="password" type="password" onChange={formChange} />
                     <Button onClick={signIn}>Sign In</Button>
                     <Button onClick={signUp}>Sign Up</Button>
                 </div>

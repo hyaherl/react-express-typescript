@@ -1,9 +1,10 @@
 import { User } from '../model/User';
 
-const createUser = (email: string, password: string) => {
+const createUser = (email: string, password: string, nickname: string) => {
     const user = new User();
     user.email = email;
     user.password = password;
+    user.nickname = nickname;
     user.save();
 };
 
@@ -17,9 +18,10 @@ const getUserById = async (id: number) => {
     return user;
 };
 
-const updateUser = async (id: number, password: string) => {
+const updateUser = async (id: number, password: string, nickname: string) => {
     const user = await User.findOne({ id: id });
     user.password = password;
+    user.nickname = nickname;
     user.save();
 };
 

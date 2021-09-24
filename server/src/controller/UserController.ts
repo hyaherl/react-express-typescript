@@ -8,12 +8,13 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     console.log('::: signUp :::');
     const email: string = req.body.email;
     const password: string = req.body.password;
+    const nickname: string = req.body.nickname;
     const encryptPassword: string = bcrypt.hashSync(password, 10);
 
     try {
-        await UserService.createUser(email, encryptPassword);
-    } catch (error) {
-        console.log(error);
+        await UserService.createUser(email, encryptPassword, nickname);
+    } catch (e) {
+        console.log(e);
     }
 };
 
@@ -33,6 +34,7 @@ const login = async (req: any, res: Response, next: NextFunction) => {
                 const token = jwt.sign(
                     {
                         email: user.email,
+                        nickname: user.nickname,
                     },
                     'jwt-secret-key',
                     { expiresIn: '7d' }, // The token expiration time.
@@ -46,7 +48,16 @@ const login = async (req: any, res: Response, next: NextFunction) => {
     }
 };
 
+const modifyUser = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('::: modify user :::');
+    try {
+    } catch (e) {
+        console.error(e);
+    }
+};
+
 export default {
     signUp,
     login,
+    modifyUser,
 };

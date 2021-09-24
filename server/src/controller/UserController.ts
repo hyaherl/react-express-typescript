@@ -1,38 +1,63 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../service';
 const bcrypt = require('bcrypt');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
     console.log('::: signUp :::');
     const email: string = req.body.email;
     const password: string = req.body.password;
+    const nickname: string = req.body.nickname;
     const encryptPassword: string = bcrypt.hashSync(password, 10);
 
     try {
-        await UserService.createUser(email, encryptPassword);
-    } catch (error) {
-        console.log(error);
+        await UserService.createUser(email, encryptPassword, nickname);
+    } catch (e) {
+        console.log(e);
     }
 };
 
-const logIn = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('::: logIn :::');
-    const email: string = req.body.email;
-    const password: string = req.body.password;
-
+const login = async (req: any, res: Response, next: NextFunction) => {
+    console.log('::: login :::');
     try {
-        const user = await UserService.getUserByEmail(email);
-        if (bcrypt.compareSync(password, user.password)) {
-            console.log('login success');
-        } else {
-            console.log('login failed');
-        }
-    } catch (error) {
-        console.log(error);
+        passport.authenticate('local', { session: false }, (err, user) => {
+            if (err || !user) {
+                console.log(err);
+                return res.status(400).end();
+            }
+            req.login(user, { session: false }, err => {
+                if (err) {
+                    console.log(err);
+                    return next(err);
+                }
+                const token = jwt.sign(
+                    {
+                        email: user.email,
+                        nickname: user.nickname,
+                    },
+                    'jwt-secret-key',
+                    { expiresIn: '7d' }, // The token expiration time.
+                );
+                return res.json({ token });
+            });
+        })(req, res);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+};
+
+const modifyUser = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('::: modify user :::');
+    try {
+    } catch (e) {
+        console.error(e);
     }
 };
 
 export default {
     signUp,
-    logIn,
+    login,
+    modifyUser,
 };

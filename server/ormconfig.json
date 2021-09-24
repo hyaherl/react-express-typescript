@@ -1,0 +1,20 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3307,
+   "username": "root",
+   "password": "1234",
+   "database": "test",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/model/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "subscribersDir": "src/subscriber"
+   }
+}

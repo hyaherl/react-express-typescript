@@ -13,6 +13,8 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         await UserService.createUser(email, encryptPassword, nickname);
+        console.log('sign up success');
+        return res.json({ message: 'success' });
     } catch (e) {
         console.log(e);
     }
@@ -39,6 +41,7 @@ const login = async (req: any, res: Response, next: NextFunction) => {
                     'jwt-secret-key',
                     { expiresIn: '7d' }, // The token expiration time.
                 );
+                console.log(user.nickname + ' is Logged In !!');
                 return res.json({ token });
             });
         })(req, res);

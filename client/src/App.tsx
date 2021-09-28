@@ -1,4 +1,3 @@
-import { Container } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -10,6 +9,7 @@ import NavigationBar from './components/layout/NavigationBar';
 import LoginContainer from './container/user/LoginContainer';
 import SignUpContainer from './container/user/SignUpContainer';
 import ProfileContainer from './container/user/ProfileContainer';
+import { Container } from '@mui/material';
 
 interface User {
     email: string;

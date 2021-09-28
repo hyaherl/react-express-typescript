@@ -1,17 +1,5 @@
 import React from 'react';
-import { Button, makeStyles, TextField } from '@material-ui/core';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-    },
-    div: {
-        margin: '0 auto',
-    },
-}));
+import { Box, Button, Grid, TextField } from '@mui/material';
 
 type SignUpProps = {
     formChange: (e: any) => void;
@@ -19,19 +7,24 @@ type SignUpProps = {
 };
 
 function SignUp({ formChange, signUp }: SignUpProps) {
-    const classes = useStyles();
     return (
-        <div>
+        <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                margin: '0 auto',
+            }}
+            noValidate
+            autoComplete="off"
+        >
             <h1>Sign Up</h1>
-            <form className={classes.root} noValidate autoComplete="off">
-                <div className={classes.div}>
-                    <TextField id="email" name="email" label="email" onChange={formChange} />
-                    <TextField id="password" name="password" label="password" type="password" onChange={formChange} />
-                    <TextField id="nickname" name="nickname" label="nickname" onChange={formChange} />
-                    <Button onClick={signUp}>Sign Up</Button>
-                </div>
-            </form>
-        </div>
+            <Grid container direction="column" alignItems="center">
+                <TextField id="email" name="email" label="email" onChange={formChange} />
+                <TextField id="password" name="password" label="password" type="password" onChange={formChange} />
+                <TextField id="nickname" name="nickname" label="nickname" onChange={formChange} />
+                <Button onClick={signUp}>Sign Up</Button>
+            </Grid>
+        </Box>
     );
 }
 

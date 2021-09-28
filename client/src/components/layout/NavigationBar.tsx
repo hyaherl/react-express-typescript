@@ -28,6 +28,11 @@ function NavigationBar({ user, logout }: NavigationBarProps) {
         history.push(path);
     };
 
+    const signOut = () => {
+        logout();
+        linkPage('/');
+    };
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -38,8 +43,11 @@ function NavigationBar({ user, logout }: NavigationBarProps) {
                     <Typography variant="h6" className={classes.title} onClick={() => linkPage('/')}>
                         Hello World
                     </Typography>
+                    <Button color="inherit" onClick={() => linkPage('/profile')}>
+                        Profile
+                    </Button>
                     {user ? (
-                        <Button color="inherit" onClick={() => logout()}>
+                        <Button color="inherit" onClick={() => signOut()}>
                             Logout
                         </Button>
                     ) : (

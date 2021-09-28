@@ -1,27 +1,14 @@
-import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Box, AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
-
-type NavigationBarProps = {
+interface NavigationBarProps {
     user: any;
     logout: () => void;
-};
+}
 
 function NavigationBar({ user, logout }: NavigationBarProps) {
-    const classes = useStyles();
     const history = useHistory();
 
     const linkPage = (path: string) => {
@@ -34,13 +21,13 @@ function NavigationBar({ user, logout }: NavigationBarProps) {
     };
 
     return (
-        <div className={classes.root}>
+        <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
+                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                        <Menu />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title} onClick={() => linkPage('/')}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={() => linkPage('/')}>
                         Hello World
                     </Typography>
                     <Button color="inherit" onClick={() => linkPage('/profile')}>
@@ -57,7 +44,7 @@ function NavigationBar({ user, logout }: NavigationBarProps) {
                     )}
                 </Toolbar>
             </AppBar>
-        </div>
+        </Box>
     );
 }
 

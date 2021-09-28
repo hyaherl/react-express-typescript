@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import axios from '../../util/axios';
 import SignUp from '../../components/user/SignUp';
+import { useHistory } from 'react-router-dom';
 
 function SignUpContainer() {
-    const [user, setUser] = useState({
+    const history = useHistory();
+    const linkPage = (path: string) => {
+        history.push(path);
+    };
+
+    const [signUpForm, setSignUpForm] = useState({
         email: '',
         password: '',
         nickname: '',
     });
-    const { email, password, nickname } = user;
+    const { email, password, nickname } = signUpForm;
 
     const formChange = (e: any) => {
         const { name, value } = e.target;
-        setUser({
-            ...user,
+        setSignUpForm({
+            ...signUpForm,
             [name]: value,
         });
     };
@@ -27,6 +33,7 @@ function SignUpContainer() {
             })
             .then(res => {
                 console.log(res.data);
+                linkPage('/login');
             });
     };
 

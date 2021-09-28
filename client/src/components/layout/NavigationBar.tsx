@@ -15,10 +15,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-type NavigationBarProps = {
+interface NavigationBarProps {
     user: any;
     logout: () => void;
-};
+}
 
 function NavigationBar({ user, logout }: NavigationBarProps) {
     const classes = useStyles();

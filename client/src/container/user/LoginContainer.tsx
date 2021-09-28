@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Login from '../../components/user/Login';
 
-type LoginContainerProps = {
+interface LoginContainerProps {
     login: (email: string, password: string) => void;
-};
+}
 
 function LoginContainer({ login }: LoginContainerProps) {
     const history = useHistory();

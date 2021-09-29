@@ -9,6 +9,7 @@ import SignUpContainer from './container/user/SignUpContainer';
 import ProfileContainer from './container/user/ProfileContainer';
 import { Container } from '@mui/material';
 import { User } from './interface';
+import EditProfileContainer from './container/user/EditProfileContainer';
 
 function App() {
     const [user, setUser] = useState<User | null>(null);
@@ -28,13 +29,13 @@ function App() {
                 <Container>
                     <Switch>
                         <Route path="/" exact component={Home} />
-                        <Route path="/logIn" exact render={() => <LoginContainer setUser={setUser} />} />
-                        <Route path="/signUp" exact component={SignUpContainer} />
-                        <AuthRoute
-                            authenticated={user}
-                            path="/profile"
-                            render={() => <ProfileContainer user={user} />}
-                        />
+                        <Route path="/user/login" exact render={() => <LoginContainer setUser={setUser} />} />
+                        <Route path="/user/signUp" exact component={SignUpContainer} />
+                        <AuthRoute path="/user/profile" render={() => <ProfileContainer user={user} />} />
+                        <AuthRoute path="/user/editProfile" render={() => <EditProfileContainer user={user} />} />
+                        <Route path="*">
+                            <div>404</div>
+                        </Route>
                     </Switch>
                 </Container>
             </Router>

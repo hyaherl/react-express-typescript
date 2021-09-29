@@ -56,9 +56,19 @@ const login = async (req: any, res: Response, next: NextFunction) => {
 
 const modifyUser = async (req: Request, res: Response, next: NextFunction) => {
     console.log('::: modify user :::');
+    const email: string = req.body.email;
+    const password: string = req.body.password;
+    const nickname: string = req.body.nickname;
+    const encryptPassword: string = bcrypt.hashSync(password, 10);
+
     try {
+        const user = await UserService.getUserByEmail(email);
+
+        await UserService.updateUser(user.id, encryptPassword, nickname);
+        console.log('modify user success');
+        return res.json({ message: 'success' });
     } catch (e) {
-        console.error(e);
+        console.log(e);
     }
 };
 

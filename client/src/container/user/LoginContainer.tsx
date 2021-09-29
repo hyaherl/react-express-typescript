@@ -41,7 +41,7 @@ function LoginContainer({ setUser }: any) {
             })
             .then(res => {
                 const jwt = res.data.token;
-                window.localStorage.setItem('jwt', JSON.stringify(jwt));
+                window.localStorage.setItem('jwt', jwt);
                 if (jwt) {
                     const token: User = jwtDecode(jwt);
                     setUser(token);
@@ -57,7 +57,7 @@ function LoginContainer({ setUser }: any) {
 
     return (
         <div>
-            <Login formik={formik} signUp={() => linkPage('/signUp')} />
+            <Login formik={formik} signUp={() => linkPage('/user/signUp')} />
         </div>
     );
 }

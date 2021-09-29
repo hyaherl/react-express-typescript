@@ -1,11 +1,16 @@
 import React from 'react';
-import axios from '../../util/axios';
 import SignUp from '../../components/user/SignUp';
-import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { User } from '../../interface';
+import axios from '../../util/axios';
+import { useHistory } from 'react-router';
 
-function SignUpContainer() {
+interface EditProfileContainerProps {
+    user: User | null;
+}
+
+function EditProfileContainer({ user }: EditProfileContainerProps) {
     const history = useHistory();
     const linkPage = (path: string) => {
         history.push(path);
@@ -33,39 +38,43 @@ function SignUpContainer() {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
+            email: user ? user.email : '',
             password: '',
             confirmPassword: '',
-            nickname: '',
+            nickname: user ? user.nickname : '',
         },
         validationSchema: SignUpSchema,
         onSubmit: values => {
-            signUp(values.email, values.password, values.nickname);
+            editProfile(values.email, values.password, values.nickname);
         },
     });
 
-    const signUp = (email: string, password: string, nickname: string) => {
+    const editProfile = (email: string, password: string, nickname: string) => {
         axios
-            .post('/user/signUp', {
-                email: email,
-                password: password,
-                nickname: nickname,
-            })
+            .put(
+                '/user/modify',
+                {
+                    email: email,
+                    password: password,
+                    nickname: nickname,
+                },
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + window.localStorage.getItem('jwt'),
+                    },
+                },
+            )
             .then(res => {
-                if (res.data.message === 'exist') {
-                    alert('Email already exists.');
-                } else {
-                    alert('Sign Up Success');
-                    linkPage('/user/login');
-                }
+                alert('Edit Success');
+                linkPage('/user/profile');
             });
     };
 
     return (
         <div>
-            <SignUp formik={formik} title={'Sign Up'} />
+            <SignUp formik={formik} title={'Edit Profile'} />
         </div>
     );
 }
 
-export default SignUpContainer;
+export default EditProfileContainer;

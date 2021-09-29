@@ -2,21 +2,23 @@ import { Box, AppBar, Button, IconButton, Toolbar, Typography } from '@mui/mater
 import { Menu } from '@mui/icons-material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { User } from '../../interface';
 
 interface NavigationBarProps {
-    user: any;
-    logout: () => void;
+    user: User | null;
+    setUser: any;
 }
 
-function NavigationBar({ user, logout }: NavigationBarProps) {
+function NavigationBar({ user, setUser }: NavigationBarProps) {
     const history = useHistory();
 
     const linkPage = (path: string) => {
         history.push(path);
     };
 
-    const signOut = () => {
-        logout();
+    const logout = () => {
+        setUser(null);
+        window.localStorage.removeItem('jwt');
         linkPage('/');
     };
 
@@ -34,7 +36,7 @@ function NavigationBar({ user, logout }: NavigationBarProps) {
                         Profile
                     </Button>
                     {user ? (
-                        <Button color="inherit" onClick={() => signOut()}>
+                        <Button color="inherit" onClick={() => logout()}>
                             Logout
                         </Button>
                     ) : (

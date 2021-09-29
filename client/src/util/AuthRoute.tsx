@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-function AuthRoute({ authenticated, component: Component, render }: any) {
+function AuthRoute({ component: Component, render }: any) {
+    const authenticated = window.localStorage.getItem('jwt') ? true : false;
     return (
         <Route
             render={props =>
@@ -12,7 +13,7 @@ function AuthRoute({ authenticated, component: Component, render }: any) {
                         <Component {...props} />
                     )
                 ) : (
-                    <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                    <Redirect to={{ pathname: '/user/login', state: { from: props.location } }} />
                 )
             }
         />

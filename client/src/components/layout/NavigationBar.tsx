@@ -32,7 +32,7 @@ function NavigationBar({ user, setUser }: NavigationBarProps) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={() => linkPage('/')}>
                         Hello World
                     </Typography>
-                    <Button color="inherit" onClick={() => linkPage('/profile')}>
+                    <Button color="inherit" onClick={() => linkPage('/user/profile')}>
                         Profile
                     </Button>
                     {user ? (
@@ -40,7 +40,7 @@ function NavigationBar({ user, setUser }: NavigationBarProps) {
                             Logout
                         </Button>
                     ) : (
-                        <Button color="inherit" onClick={() => linkPage('/logIn')}>
+                        <Button color="inherit" onClick={() => linkPage('/user/login')}>
                             Login
                         </Button>
                     )}

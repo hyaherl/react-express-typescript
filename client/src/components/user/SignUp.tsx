@@ -3,11 +3,11 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 
 interface SignUpProps {
     formik: any;
+    title: string;
 }
 
-function SignUp({ formik }: SignUpProps) {
+function SignUp({ formik, title }: SignUpProps) {
     const { errors, touched, values, handleSubmit, handleChange } = formik;
-
     return (
         <Box
             component="form"
@@ -19,7 +19,7 @@ function SignUp({ formik }: SignUpProps) {
             autoComplete="off"
             onSubmit={handleSubmit}
         >
-            <h1>Sign Up</h1>
+            <h1>{title}</h1>
             <Grid container direction="column" alignItems="flex-start">
                 <TextField
                     id="email"
@@ -30,6 +30,7 @@ function SignUp({ formik }: SignUpProps) {
                     onChange={handleChange}
                     error={Boolean(touched.email && errors.email)}
                     helperText={touched.email && errors.email}
+                    disabled={title === 'Edit Profile'}
                 />
                 <TextField
                     id="password"
@@ -60,7 +61,7 @@ function SignUp({ formik }: SignUpProps) {
                     error={Boolean(touched.nickname && errors.nickname)}
                     helperText={touched.nickname && errors.nickname}
                 />
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit">Save</Button>
             </Grid>
         </Box>
     );

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Button, Grid, TextField } from '@mui/material';
 
-type SignUpProps = {
-    formChange: (e: any) => void;
-    signUp: () => void;
-};
+interface SignUpProps {
+    formik: any;
+}
 
-function SignUp({ formChange, signUp }: SignUpProps) {
+function SignUp({ formik }: SignUpProps) {
+    const { errors, touched, values, handleSubmit, handleChange } = formik;
+
     return (
         <Box
             component="form"
@@ -16,13 +17,40 @@ function SignUp({ formChange, signUp }: SignUpProps) {
             }}
             noValidate
             autoComplete="off"
+            onSubmit={handleSubmit}
         >
             <h1>Sign Up</h1>
-            <Grid container direction="column" alignItems="center">
-                <TextField id="email" name="email" label="email" onChange={formChange} />
-                <TextField id="password" name="password" label="password" type="password" onChange={formChange} />
-                <TextField id="nickname" name="nickname" label="nickname" onChange={formChange} />
-                <Button onClick={signUp}>Sign Up</Button>
+            <Grid container direction="column" alignItems="flex-start">
+                <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    value={values.email}
+                    type="email"
+                    onChange={handleChange}
+                    error={Boolean(touched.email && errors.email)}
+                    helperText={touched.email && errors.email}
+                />
+                <TextField
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    error={Boolean(touched.password && errors.password)}
+                    helperText={touched.password && errors.password}
+                />
+                <TextField
+                    id="nickname"
+                    name="nickname"
+                    label="Nickname"
+                    value={values.nickname}
+                    onChange={handleChange}
+                    error={Boolean(touched.nickname && errors.nickname)}
+                    helperText={touched.nickname && errors.nickname}
+                />
+                <Button type="submit">Sign Up</Button>
             </Grid>
         </Box>
     );

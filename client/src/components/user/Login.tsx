@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Button, Grid, TextField } from '@mui/material';
 
-type LogInProps = {
-    formChange: (e: any) => void;
-    signIn: () => void;
+interface LogInProps {
+    formik: any;
     signUp: () => void;
-};
+}
 
-function Login({ formChange, signIn, signUp }: LogInProps) {
+function Login({ formik, signUp }: LogInProps) {
+    const { errors, touched, values, handleSubmit, handleChange } = formik;
+
     return (
         <Box
             component="form"
@@ -17,13 +18,32 @@ function Login({ formChange, signIn, signUp }: LogInProps) {
             }}
             noValidate
             autoComplete="off"
+            onSubmit={handleSubmit}
         >
             <h1>Login</h1>
-            <Grid container direction="column" alignItems="center">
-                <TextField id="email" name="email" label="email" onChange={formChange} />
-                <TextField id="password" name="password" label="password" type="password" onChange={formChange} />
+            <Grid container direction="column" alignItems="flex-start">
+                <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    error={Boolean(touched.email && errors.email)}
+                    helperText={touched.email && errors.email}
+                />
+                <TextField
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    error={Boolean(touched.password && errors.password)}
+                    helperText={touched.password && errors.password}
+                />
                 <Grid item>
-                    <Button onClick={signIn}>Sign In</Button>
+                    <Button type="submit">Login</Button>
                     <Button onClick={signUp}>Sign Up</Button>
                 </Grid>
             </Grid>

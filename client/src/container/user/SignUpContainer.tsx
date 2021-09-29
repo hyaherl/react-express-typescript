@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from '../../util/axios';
+import { Axios } from '../../util/Axios';
 import SignUp from '../../components/user/SignUp';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
@@ -45,20 +45,18 @@ function SignUpContainer() {
     });
 
     const signUp = (email: string, password: string, nickname: string) => {
-        axios
-            .post('/user/signUp', {
-                email: email,
-                password: password,
-                nickname: nickname,
-            })
-            .then(res => {
-                if (res.data.message === 'exist') {
-                    alert('Email already exists.');
-                } else {
-                    alert('Sign Up Success');
-                    linkPage('/user/login');
-                }
-            });
+        Axios.post('/user/signUp', {
+            email: email,
+            password: password,
+            nickname: nickname,
+        }).then(res => {
+            if (res.data.message === 'exist') {
+                alert('Email already exists.');
+            } else {
+                alert('Sign Up Success');
+                linkPage('/user/login');
+            }
+        });
     };
 
     return (

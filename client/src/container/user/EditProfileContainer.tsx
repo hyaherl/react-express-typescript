@@ -3,7 +3,7 @@ import SignUp from '../../components/user/SignUp';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { User } from '../../interface';
-import axios from '../../util/axios';
+import { Axios } from '../../util/Axios';
 import { useHistory } from 'react-router';
 
 interface EditProfileContainerProps {
@@ -50,24 +50,14 @@ function EditProfileContainer({ user }: EditProfileContainerProps) {
     });
 
     const editProfile = (email: string, password: string, nickname: string) => {
-        axios
-            .put(
-                '/user/modify',
-                {
-                    email: email,
-                    password: password,
-                    nickname: nickname,
-                },
-                {
-                    headers: {
-                        Authorization: 'Bearer ' + window.localStorage.getItem('jwt'),
-                    },
-                },
-            )
-            .then(res => {
-                alert('Edit Success');
-                linkPage('/user/profile');
-            });
+        Axios.put('/user/modify', {
+            email: email,
+            password: password,
+            nickname: nickname,
+        }).then(res => {
+            alert('Edit Success');
+            linkPage('/user/profile');
+        });
     };
 
     return (

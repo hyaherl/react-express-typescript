@@ -4,7 +4,7 @@ import Login from '../../components/user/Login';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import jwtDecode from 'jwt-decode';
-import axios from '../../util/axios';
+import { Axios } from '../../util/Axios';
 import { User } from '../../interface';
 
 function LoginContainer({ setUser }: any) {
@@ -34,11 +34,10 @@ function LoginContainer({ setUser }: any) {
     });
 
     const login = (email: string, password: string) => {
-        axios
-            .post('/user/login', {
-                email: email,
-                password: password,
-            })
+        Axios.post('/user/login', {
+            email: email,
+            password: password,
+        })
             .then(res => {
                 const jwt = res.data.token;
                 window.localStorage.setItem('jwt', jwt);

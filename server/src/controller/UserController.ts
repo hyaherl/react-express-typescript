@@ -12,6 +12,9 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     const encryptPassword: string = bcrypt.hashSync(password, 10);
 
     try {
+        const isUserExist = await UserService.getUserByEmail(email);
+        if (isUserExist) return res.json({ message: 'exist' });
+
         await UserService.createUser(email, encryptPassword, nickname);
         console.log('sign up success');
         return res.json({ message: 'success' });

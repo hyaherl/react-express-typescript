@@ -45,6 +45,7 @@ function LoginContainer({ setUser }: any) {
                 if (jwt) {
                     const token: User = jwtDecode(jwt);
                     setUser(token);
+                    alert('Login Success');
                     linkPage('/');
                 }
             })

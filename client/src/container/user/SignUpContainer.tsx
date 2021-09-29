@@ -18,6 +18,12 @@ function SignUpContainer() {
             .min(8, 'Password should be of minimum 8 characters length')
             .max(20, 'Password should be of maximum 20 characters length')
             .required('Password is required'),
+        confirmPassword: yup
+            .string()
+            .min(8, 'Password should be of minimum 8 characters length')
+            .max(20, 'Password should be of maximum 20 characters length')
+            .oneOf([yup.ref('password')], 'Paswords must match')
+            .required('Confirm Password is required'),
         nickname: yup
             .string()
             .min(2, 'Nickname should be of minimum 2 characters length')
@@ -29,6 +35,7 @@ function SignUpContainer() {
         initialValues: {
             email: '',
             password: '',
+            confirmPassword: '',
             nickname: '',
         },
         validationSchema: SignUpSchema,
@@ -45,7 +52,12 @@ function SignUpContainer() {
                 nickname: nickname,
             })
             .then(res => {
-                linkPage('/login');
+                if (res.data.message === 'exist') {
+                    alert('Email already exists.');
+                } else {
+                    alert('Sign Up Success');
+                    linkPage('/login');
+                }
             });
     };
 

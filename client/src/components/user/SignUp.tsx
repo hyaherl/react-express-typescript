@@ -42,6 +42,16 @@ function SignUp({ formik }: SignUpProps) {
                     helperText={touched.password && errors.password}
                 />
                 <TextField
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                    helperText={touched.confirmPassword && errors.confirmPassword}
+                />
+                <TextField
                     id="nickname"
                     name="nickname"
                     label="Nickname"

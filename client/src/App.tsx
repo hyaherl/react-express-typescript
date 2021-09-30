@@ -6,6 +6,7 @@ import { Container } from '@mui/material';
 import UserContainer from './container/UserContainer';
 import Page404 from './container/Page404';
 import AuthContainer from './container/AuthContainer';
+import BoardContainer from './container/BoardContainer';
 
 function App() {
     const [token, setToken] = useState<string | null>(window.localStorage.getItem('jwt') || null);
@@ -19,6 +20,7 @@ function App() {
                         <Route path="/" exact component={Home} />
                         <Route path="/auth" render={props => <AuthContainer {...props} setToken={setToken} />} />
                         <Route path="/user" render={props => <UserContainer {...props} token={token} />} />
+                        <Route path="/board" render={props => <BoardContainer {...props} />} />
                         <Route path="*">
                             <Page404 />
                         </Route>

@@ -1,18 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import Login from '../../components/user/Login';
+import Login from '../../components/auth/Login';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import jwtDecode from 'jwt-decode';
 import { Axios } from '../../util/Axios';
-import { User } from '../../interface';
 
-function LoginContainer({ setUser }: any) {
-    const history = useHistory();
-    const linkPage = (path: string) => {
-        history.push(path);
-    };
-
+function LoginContainer({ setToken, linkPage }: any) {
     const LoginSchema = yup.object().shape({
         email: yup.string().email('Email must be a valid email address').required('Email is required'),
         password: yup
@@ -42,8 +34,7 @@ function LoginContainer({ setUser }: any) {
                 const jwt = res.data.token;
                 window.localStorage.setItem('jwt', jwt);
                 if (jwt) {
-                    const token: User = jwtDecode(jwt);
-                    setUser(token);
+                    setToken(jwt);
                     alert('Login Success');
                     linkPage('/');
                 }
@@ -56,7 +47,7 @@ function LoginContainer({ setUser }: any) {
 
     return (
         <div>
-            <Login formik={formik} signUp={() => linkPage('/user/signUp')} />
+            <Login formik={formik} signUp={() => linkPage('/auth/signUp')} />
         </div>
     );
 }

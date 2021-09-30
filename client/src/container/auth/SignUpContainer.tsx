@@ -1,16 +1,10 @@
 import React from 'react';
 import { Axios } from '../../util/Axios';
-import SignUp from '../../components/user/SignUp';
-import { useHistory } from 'react-router-dom';
+import SignUp from '../../components/auth/SignUp';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-function SignUpContainer() {
-    const history = useHistory();
-    const linkPage = (path: string) => {
-        history.push(path);
-    };
-
+function SignUpContainer({ linkPage }: any) {
     const SignUpSchema = yup.object().shape({
         email: yup.string().email('Email must be a valid email address').required('Email is required'),
         password: yup
@@ -54,7 +48,7 @@ function SignUpContainer() {
                 alert('Email already exists.');
             } else {
                 alert('Sign Up Success');
-                linkPage('/user/login');
+                linkPage('/auth/login');
             }
         });
     };

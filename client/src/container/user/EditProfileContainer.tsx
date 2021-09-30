@@ -1,21 +1,10 @@
 import React from 'react';
-import SignUp from '../../components/user/SignUp';
+import SignUp from '../../components/auth/SignUp';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { User } from '../../interface';
-import axios from '../../util/axios';
-import { useHistory } from 'react-router';
+import { Axios } from '../../util/Axios';
 
-interface EditProfileContainerProps {
-    user: User | null;
-}
-
-function EditProfileContainer({ user }: EditProfileContainerProps) {
-    const history = useHistory();
-    const linkPage = (path: string) => {
-        history.push(path);
-    };
-
+function EditProfileContainer({ profile, linkPage }: any) {
     const SignUpSchema = yup.object().shape({
         email: yup.string().email('Email must be a valid email address').required('Email is required'),
         password: yup
@@ -38,10 +27,10 @@ function EditProfileContainer({ user }: EditProfileContainerProps) {
 
     const formik = useFormik({
         initialValues: {
-            email: user ? user.email : '',
+            email: profile ? profile.email : '',
             password: '',
             confirmPassword: '',
-            nickname: user ? user.nickname : '',
+            nickname: profile ? profile.nickname : '',
         },
         validationSchema: SignUpSchema,
         onSubmit: values => {
@@ -50,24 +39,14 @@ function EditProfileContainer({ user }: EditProfileContainerProps) {
     });
 
     const editProfile = (email: string, password: string, nickname: string) => {
-        axios
-            .put(
-                '/user/modify',
-                {
-                    email: email,
-                    password: password,
-                    nickname: nickname,
-                },
-                {
-                    headers: {
-                        Authorization: 'Bearer ' + window.localStorage.getItem('jwt'),
-                    },
-                },
-            )
-            .then(res => {
-                alert('Edit Success');
-                linkPage('/user/profile');
-            });
+        Axios.put('/user/modify', {
+            email: email,
+            password: password,
+            nickname: nickname,
+        }).then(() => {
+            alert('Edit Success');
+            linkPage('/user/profile');
+        });
     };
 
     return (

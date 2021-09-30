@@ -39,7 +39,6 @@ const login = async (req: any, res: Response, next: NextFunction) => {
                 const token = jwt.sign(
                     {
                         email: user.email,
-                        nickname: user.nickname,
                     },
                     'jwt-secret-key',
                     { expiresIn: '7d' }, // The token expiration time.
@@ -72,8 +71,25 @@ const modifyUser = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('::: get user :::');
+    const email: string = req.query.email as string;
+
+    try {
+        const user = await UserService.getUserByEmail(email);
+        const userDto = {
+            email: user.email,
+            nickname: user.nickname,
+        };
+        return res.json(userDto);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 export default {
     signUp,
     login,
     modifyUser,
+    getUser,
 };

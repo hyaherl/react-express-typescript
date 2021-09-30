@@ -1,18 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import Login from '../../components/user/Login';
+import Login from '../../components/auth/Login';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import jwtDecode from 'jwt-decode';
-import axios from '../../util/axios';
-import { User } from '../../interface';
+import { Axios } from '../../util/Axios';
 
-function LoginContainer({ setUser }: any) {
-    const history = useHistory();
-    const linkPage = (path: string) => {
-        history.push(path);
-    };
-
+function LoginContainer({ setToken, linkPage }: any) {
     const LoginSchema = yup.object().shape({
         email: yup.string().email('Email must be a valid email address').required('Email is required'),
         password: yup
@@ -34,17 +26,15 @@ function LoginContainer({ setUser }: any) {
     });
 
     const login = (email: string, password: string) => {
-        axios
-            .post('/user/login', {
-                email: email,
-                password: password,
-            })
+        Axios.post('/user/login', {
+            email: email,
+            password: password,
+        })
             .then(res => {
                 const jwt = res.data.token;
                 window.localStorage.setItem('jwt', jwt);
                 if (jwt) {
-                    const token: User = jwtDecode(jwt);
-                    setUser(token);
+                    setToken(jwt);
                     alert('Login Success');
                     linkPage('/');
                 }
@@ -57,7 +47,7 @@ function LoginContainer({ setUser }: any) {
 
     return (
         <div>
-            <Login formik={formik} signUp={() => linkPage('/user/signUp')} />
+            <Login formik={formik} signUp={() => linkPage('/auth/signUp')} />
         </div>
     );
 }

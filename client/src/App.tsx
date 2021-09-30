@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-import AuthRoute from './util/AuthRoute';
 import Home from './container/Home';
 import NavigationBar from './components/layout/NavigationBar';
-import LoginContainer from './container/user/LoginContainer';
-import SignUpContainer from './container/user/SignUpContainer';
-import ProfileContainer from './container/user/ProfileContainer';
 import { Container } from '@mui/material';
-import { User } from './interface';
-import EditProfileContainer from './container/user/EditProfileContainer';
+import UserContainer from './container/UserContainer';
+import Page404 from './container/Page404';
+import AuthContainer from './container/AuthContainer';
 
 function App() {
-    const [user, setUser] = useState<User | null>(null);
-
-    useEffect(() => {
-        const jwt = window.localStorage.getItem('jwt');
-        if (jwt) {
-            const token: User = jwtDecode(jwt);
-            setUser(token);
-        }
-    }, []);
+    const [token, setToken] = useState<string | null>(window.localStorage.getItem('jwt') || null);
 
     return (
         <div className="App">
             <Router>
-                <NavigationBar user={user} setUser={setUser} />
+                <NavigationBar token={token} setToken={setToken} />
                 <Container>
                     <Switch>
                         <Route path="/" exact component={Home} />
-                        <Route path="/user/login" exact render={() => <LoginContainer setUser={setUser} />} />
-                        <Route path="/user/signUp" exact component={SignUpContainer} />
-                        <AuthRoute path="/user/profile" render={() => <ProfileContainer user={user} />} />
-                        <AuthRoute path="/user/editProfile" render={() => <EditProfileContainer user={user} />} />
+                        <Route path="/auth" render={props => <AuthContainer {...props} setToken={setToken} />} />
+                        <Route path="/user" render={props => <UserContainer {...props} token={token} />} />
                         <Route path="*">
-                            <div>404</div>
+                            <Page404 />
                         </Route>
                     </Switch>
                 </Container>

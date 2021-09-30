@@ -1,16 +1,10 @@
 import React from 'react';
-import axios from '../../util/axios';
-import SignUp from '../../components/user/SignUp';
-import { useHistory } from 'react-router-dom';
+import { Axios } from '../../util/Axios';
+import SignUp from '../../components/auth/SignUp';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-function SignUpContainer() {
-    const history = useHistory();
-    const linkPage = (path: string) => {
-        history.push(path);
-    };
-
+function SignUpContainer({ linkPage }: any) {
     const SignUpSchema = yup.object().shape({
         email: yup.string().email('Email must be a valid email address').required('Email is required'),
         password: yup
@@ -45,20 +39,18 @@ function SignUpContainer() {
     });
 
     const signUp = (email: string, password: string, nickname: string) => {
-        axios
-            .post('/user/signUp', {
-                email: email,
-                password: password,
-                nickname: nickname,
-            })
-            .then(res => {
-                if (res.data.message === 'exist') {
-                    alert('Email already exists.');
-                } else {
-                    alert('Sign Up Success');
-                    linkPage('/user/login');
-                }
-            });
+        Axios.post('/user/signUp', {
+            email: email,
+            password: password,
+            nickname: nickname,
+        }).then(res => {
+            if (res.data.message === 'exist') {
+                alert('Email already exists.');
+            } else {
+                alert('Sign Up Success');
+                linkPage('/auth/login');
+            }
+        });
     };
 
     return (

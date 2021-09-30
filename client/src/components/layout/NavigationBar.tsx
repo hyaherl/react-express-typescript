@@ -2,14 +2,13 @@ import { Box, AppBar, Button, IconButton, Toolbar, Typography } from '@mui/mater
 import { Menu } from '@mui/icons-material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { User } from '../../interface';
 
 interface NavigationBarProps {
-    user: User | null;
-    setUser: any;
+    token: string | null;
+    setToken: any;
 }
 
-function NavigationBar({ user, setUser }: NavigationBarProps) {
+function NavigationBar({ token, setToken }: NavigationBarProps) {
     const history = useHistory();
 
     const linkPage = (path: string) => {
@@ -17,7 +16,7 @@ function NavigationBar({ user, setUser }: NavigationBarProps) {
     };
 
     const logout = () => {
-        setUser(null);
+        setToken(null);
         window.localStorage.removeItem('jwt');
         linkPage('/');
     };
@@ -35,12 +34,12 @@ function NavigationBar({ user, setUser }: NavigationBarProps) {
                     <Button color="inherit" onClick={() => linkPage('/user/profile')}>
                         Profile
                     </Button>
-                    {user ? (
+                    {token ? (
                         <Button color="inherit" onClick={() => logout()}>
                             Logout
                         </Button>
                     ) : (
-                        <Button color="inherit" onClick={() => linkPage('/user/login')}>
+                        <Button color="inherit" onClick={() => linkPage('/auth/login')}>
                             Login
                         </Button>
                     )}

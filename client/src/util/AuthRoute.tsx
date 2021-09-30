@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-function AuthRoute({ component: Component, render }: any) {
+function AuthRoute({ component: Component, render, ...rest }: any) {
     const authenticated = window.localStorage.getItem('jwt') ? true : false;
     return (
         <Route
+            {...rest}
             render={props =>
                 authenticated ? (
                     render ? (
@@ -13,7 +14,7 @@ function AuthRoute({ component: Component, render }: any) {
                         <Component {...props} />
                     )
                 ) : (
-                    <Redirect to={{ pathname: '/user/login', state: { from: props.location } }} />
+                    <Redirect to={{ pathname: '/auth/login', state: { from: props.location } }} />
                 )
             }
         />

@@ -1,8 +1,8 @@
 import { Box, Button } from '@mui/material';
 import React from 'react';
 
-function Profile({ user, editProfile }: any) {
-    const { email, nickname } = user || {};
+function Profile({ profile, editProfile }: any) {
+    const { email, nickname } = profile || {};
     return (
         <Box>
             <h1>Profile</h1>

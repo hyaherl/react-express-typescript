@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Token, User } from '../interface';
 import AuthRoute from '../util/AuthRoute';
@@ -17,7 +17,7 @@ function UserContainer({ match, token }: any) {
     const jwt: Token = jwtDecode(token);
     const { email } = jwt;
 
-    const getUserProfile = () => {
+    const getUserProfile = useCallback(() => {
         Axios.get('/user/profile', { params: { email: email } })
             .then(res => {
                 setProfile(res.data);
@@ -25,11 +25,11 @@ function UserContainer({ match, token }: any) {
             .catch(err => {
                 console.log(err);
             });
-    };
+    }, [email]);
 
     useEffect(() => {
         getUserProfile();
-    }, [token]);
+    }, [getUserProfile]);
 
     return (
         <div>

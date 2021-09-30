@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SignUp from '../../components/auth/SignUp';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -37,10 +37,6 @@ function EditProfileContainer({ profile, linkPage }: any) {
             editProfile(values.email, values.password, values.nickname);
         },
     });
-
-    useEffect(() => {
-        console.log('hello');
-    }, [profile]);
 
     const editProfile = (email: string, password: string, nickname: string) => {
         Axios.put('/user/modify', {

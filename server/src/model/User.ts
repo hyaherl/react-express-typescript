@@ -1,4 +1,5 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
+import { Board } from './Board';
 import { Common } from './Common';
 
 @Entity()
@@ -12,4 +13,7 @@ export class User extends Common {
 
     @Column()
     nickname: string;
+
+    @OneToMany(type => Board, board => board.user)
+    boards: Board[];
 }

@@ -28,12 +28,32 @@ function BoardDetailContainer({ match, linkPage }: any) {
             });
     }, [match]);
 
+    const editBoard = () => {
+        linkPage(`/board/edit/${match.params.id}`);
+    };
+
+    const removeBoard = () => {
+        Axios.delete('/board/board', {
+            params: {
+                id: match.params.id,
+            },
+        })
+            .then(res => {
+                console.log(res.data);
+                linkPage('/board');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     useEffect(() => {
         getBoard();
     }, [getBoard]);
+
     return (
         <div>
-            <BoardDetail board={board} />
+            <BoardDetail board={board} editBoard={editBoard} removeBoard={removeBoard} />
         </div>
     );
 }

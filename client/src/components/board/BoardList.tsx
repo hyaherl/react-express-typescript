@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Board } from '../../interface';
 
 interface BoardListProps {
@@ -27,7 +27,7 @@ function BoardList({ boardList, linkPage }: BoardListProps) {
                             <TableRow
                                 key={boardList.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                onClick={() => linkPage(`/board/${boardList.id}`)}
+                                onClick={() => linkPage(`/board/detail/${boardList.id}`)}
                             >
                                 <TableCell component="th" scope="row">
                                     {boardList.id}
@@ -41,6 +41,7 @@ function BoardList({ boardList, linkPage }: BoardListProps) {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button onClick={() => linkPage('/board/edit')}>New</Button>
         </Box>
     );
 }

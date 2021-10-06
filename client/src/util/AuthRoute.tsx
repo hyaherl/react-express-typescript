@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { isAuthenticated } from './Auth';
 
 function AuthRoute({ component: Component, render, ...rest }: any) {
-    const authenticated = window.localStorage.getItem('jwt') ? true : false;
     return (
         <Route
             {...rest}
             render={props =>
-                authenticated ? (
+                isAuthenticated() ? (
                     render ? (
                         render(props)
                     ) : (
